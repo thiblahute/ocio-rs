@@ -15,6 +15,13 @@
 #include <OpenColorIO/OpenColorIO.h>
 #include <OpenColorIO/OpenColorTransforms.h>
 namespace ocio = OCIO_NAMESPACE;
+
+// Interpolation passes through the bridge as raw ints; its OCIO values have
+// been stable across releases (INTERP_DEFAULT/BEST sit apart at 254/255).
+static_assert(static_cast<int>(ocio::INTERP_DEFAULT) == 254,
+              "Interpolation ABI drift: translate in the bridge");
+static_assert(static_cast<int>(ocio::INTERP_BEST) == 255,
+              "Interpolation ABI drift: translate in the bridge");
 #endif
 
 namespace ocio_rs_bridge {
